@@ -109,11 +109,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
+    animation: splashFadeOut 0.8s ease 2s forwards;
   }
-  .splash.fade-out {
-    opacity: 0;
-    visibility: hidden;
+  @keyframes splashFadeOut {
+    to { opacity: 0; visibility: hidden; pointer-events: none; }
   }
   .splash-logo {
     width: 160px; height: 160px;
@@ -828,11 +827,6 @@
 </div>
 
 <script>
-// Splash screen
-setTimeout(function() {
-  document.getElementById('splash').classList.add('fade-out');
-}, 1800);
-
 function applyClasses() {
   var classes = [];
   if (localStorage.getItem('lang') === 'en') classes.push('lang-en');
@@ -886,12 +880,14 @@ const savedSort = localStorage.getItem('sort');
 if (savedSort) setSort(savedSort);
 
 // === Lightbox ===
+try {
 (function() {
   var lightbox = document.getElementById('lightbox');
   var track = document.getElementById('lightbox-track');
   var indexEl = document.getElementById('lightbox-index');
   var totalEl = document.getElementById('lightbox-total');
   var saveEl = document.getElementById('lightbox-save');
+  if (!lightbox || !track) return;
   var currentIndex = 0;
   var photos = [];
   var isOpen = false;
@@ -937,7 +933,7 @@ if (savedSort) setSort(savedSort);
     isOpen = true;
   }
 
-  function close() {
+  function closeLightbox() {
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
     isOpen = false;
@@ -987,14 +983,14 @@ if (savedSort) setSort(savedSort);
   function prev() { goTo(currentIndex - 1); }
   function next() { goTo(currentIndex + 1); }
 
-  document.querySelector('.lightbox-close').addEventListener('click', close);
-  document.querySelector('.lightbox-backdrop').addEventListener('click', close);
+  document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-backdrop').addEventListener('click', closeLightbox);
   document.querySelector('.lightbox-prev').addEventListener('click', function(e) { e.stopPropagation(); prev(); });
   document.querySelector('.lightbox-next').addEventListener('click', function(e) { e.stopPropagation(); next(); });
 
   document.addEventListener('keydown', function(e) {
     if (!isOpen) return;
-    if (e.key === 'Escape' || e.key === 'Esc') close();
+    if (e.key === 'Escape' || e.key === 'Esc') closeLightbox();
     if (e.key === 'ArrowLeft') prev();
     if (e.key === 'ArrowRight') next();
   });
@@ -1054,6 +1050,7 @@ if (savedSort) setSort(savedSort);
 
   init();
 })();
+} catch(e) { console.error('Lightbox error:', e); }
 </script>
 
 </body>
