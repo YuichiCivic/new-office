@@ -47,6 +47,30 @@
   .en { display: none; }
   body.lang-en .ja { display: none; }
   body.lang-en .en { display: block; }
+  .sort-toggle {
+    display: inline-flex;
+    background: rgba(255,255,255,0.08);
+    border-radius: 980px;
+    padding: 3px;
+    border: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 28px;
+  }
+  .sort-btn {
+    padding: 6px 16px;
+    border: none;
+    background: transparent;
+    color: #86868b;
+    font-family: inherit;
+    font-size: 0.78em;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 980px;
+    transition: all 0.3s;
+  }
+  .sort-btn.active {
+    background: #f5f5f7;
+    color: #000;
+  }
   /* Splash screen */
   .splash {
     position: fixed;
@@ -369,6 +393,16 @@
   <h2 class="section-title ja">内装解体 作業記録</h2>
   <h2 class="section-title en">Interior Demolition Progress</h2>
 
+  <div class="sort-toggle">
+    <button class="sort-btn active" data-sort="desc" onclick="setSort('desc')">
+      <span class="ja">新しい順</span><span class="en">Newest first</span>
+    </button>
+    <button class="sort-btn" data-sort="asc" onclick="setSort('asc')">
+      <span class="ja">古い順</span><span class="en">Oldest first</span>
+    </button>
+  </div>
+
+  <div id="day-list">
   <!-- Day 3 -->
   <div class="day-card">
     <div class="day-top">
@@ -590,6 +624,7 @@
       </a>
     </div>
   </div>
+  </div>
 </div>
 
 <div class="footer">
@@ -611,6 +646,24 @@ function setLang(lang) {
 }
 const saved = localStorage.getItem('lang');
 if (saved) setLang(saved);
+
+function setSort(order) {
+  const list = document.getElementById('day-list');
+  if (!list) return;
+  const cards = Array.from(list.querySelectorAll('.day-card'));
+  cards.sort((a, b) => {
+    const na = parseInt(a.querySelector('.day-number').textContent, 10);
+    const nb = parseInt(b.querySelector('.day-number').textContent, 10);
+    return order === 'asc' ? na - nb : nb - na;
+  });
+  cards.forEach(c => list.appendChild(c));
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.sort === order);
+  });
+  localStorage.setItem('sort', order);
+}
+const savedSort = localStorage.getItem('sort');
+if (savedSort) setSort(savedSort);
 </script>
 
 </body>
