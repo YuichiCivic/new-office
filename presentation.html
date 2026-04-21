@@ -137,11 +137,19 @@
 
   /* ---------- cover slide ---------- */
   .cover-logo {
-    width: clamp(80px, 10vw, 140px);
+    width: clamp(110px, 13vw, 180px);
     height: auto;
-    margin-bottom: 3em;
-    opacity: 0.9;
-    mix-blend-mode: screen;
+    margin-bottom: 2.5em;
+    padding: 14px;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 12px 60px rgba(41,151,255,0.25), 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .cover-logo.small {
+    width: clamp(60px, 6.5vw, 90px);
+    padding: 8px;
+    border-radius: 16px;
+    margin-bottom: 1.8em;
   }
   .cover-title {
     font-size: clamp(3em, 10vw, 9em);
@@ -436,7 +444,7 @@
   <!-- ========== 1. COVER ========== -->
   <section class="slide active">
     <div class="bg-gradient"></div>
-    <img class="cover-logo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%23f5f5f7' stroke-width='2'/><circle cx='50' cy='50' r='24' fill='%23f5f5f7'/></svg>" alt="">
+    <img class="cover-logo" src="aibos_logo.png" alt="AIBOS">
     <div class="cover-title">
       <span class="ja">新オフィス、<br><span class="accent">自分たちで</span>つくる。</span>
       <span class="en">New Office,<br><span class="accent">Built by Us</span>.</span>
@@ -706,6 +714,7 @@
   <!-- ========== 14. END ========== -->
   <section class="slide">
     <div class="bg-gradient"></div>
+    <img class="cover-logo small" src="aibos_logo.png" alt="AIBOS">
     <div class="cover-title" style="font-size:clamp(2.5em,8vw,7em)">
       <span class="ja"><span class="accent">Thank you</span>.</span>
       <span class="en"><span class="accent">Thank you</span>.</span>
